@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0f0f14;
+  --card: #16161e;
+  --border: #2a2a3e;
+  --text: #cdd6f4;
+  --muted: #a6adc8;
+  --accent: #89b4fa;
+  --accent-dark: #4f46e5;
+  --success: #a6e3a1;
+  --warn: #f9e2af;
+  --error: #f38ba8;
+  /* Codemind logo palette – matches logo image background */
+  --codemind-bg: #354535;
+  --codemind-white: #ffffff;
+  --codemind-lime: #a8e063;
+  --codemind-muted: #9ca89c;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg font-medium bg-accent hover:bg-accent-dark text-white transition;
+  }
+  .btn-ghost {
+    @apply px-4 py-2 rounded-lg font-medium text-muted hover:bg-white/5 transition;
+  }
+  .card {
+    @apply bg-surface rounded-xl border border-border p-6;
+  }
+  .input {
+    @apply w-full px-4 py-2 rounded-lg bg-black/30 border border-border text-text placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50;
+  }
+}
