@@ -47,9 +47,9 @@ export default function RegisterPage() {
             {error && <p className="text-error text-sm">{error}</p>}
             <button type="submit" className="btn-primary w-full" disabled={loading}>{loading ? "Creating account…" : "Sign up"}</button>
           </form>
-          <p className="mt-4 text-muted text-sm text-center">Already have an account? <Link href="/login" className="text-codemind-lime hover:underline">Log in</Link></p>
+          <p className="mt-4 text-muted text-sm text-center">Already have an account? <Link href="/login" className="text-cyan-400 hover:underline">Log in</Link></p>
         </div>
-        <Link href="/" className="mt-4 text-muted hover:text-codemind-lime transition text-sm">← Back</Link>
+        <Link href="/" className="mt-4 text-muted hover:text-cyan-400 transition text-sm">← Back</Link>
       </div>
     </div>
   );

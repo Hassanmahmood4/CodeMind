@@ -25,12 +25,12 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="bg-codemind-bg px-6 py-4 flex items-center justify-between">
-        <CodemindLogo size="md" showTagline />
+      <header className="bg-[#0B0F19] border-b border-white/10 px-6 py-4 flex items-center justify-between">
+        <CodemindLogo size="md" showTagline theme="dark" />
         <div className="flex items-center gap-4">
-          <span className="text-codemind-muted text-sm">{user?.email}</span>
-          <Link href="/review" className="px-4 py-2 rounded-lg font-medium bg-codemind-lime text-codemind-bg hover:opacity-90 transition">New review</Link>
-          <button onClick={() => { logout(); router.push("/"); }} className="text-codemind-white/90 hover:text-codemind-lime transition font-medium flex items-center gap-1"><LogOut className="w-4 h-4" /> Log out</button>
+          <span className="text-muted text-sm">{user?.email}</span>
+          <Link href="/review" className="btn-primary">New review</Link>
+          <button onClick={() => { logout(); router.push("/"); }} className="text-white/90 hover:text-cyan-400 transition font-medium flex items-center gap-1"><LogOut className="w-4 h-4" /> Log out</button>
         </div>
       </header>
       <main className="max-w-4xl mx-auto px-6 py-8">
@@ -46,9 +46,9 @@ export default function DashboardPage() {
           <ul className="space-y-3">
             {reviews.map((r) => (
               <li key={r.id}>
-                <Link href={`/review/${r.id}`} className="card block hover:border-accent/50 transition">
+                <Link href={`/review/${r.id}`} className="card block hover:border-cyan-400/30 transition">
                   <div className="flex justify-between items-start">
-                    <div><span className="font-mono text-sm text-muted">{r.language}</span>{r.score != null && <span className="ml-2 text-accent font-medium">Score: {Math.round(r.score)}/100</span>}</div>
+                    <div><span className="font-mono text-sm text-muted">{r.language}</span>{r.score != null && <span className="ml-2 bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text font-medium text-transparent">Score: {Math.round(r.score)}/100</span>}</div>
                     <time className="text-sm text-muted">{new Date(r.created_at).toLocaleDateString()}</time>
                   </div>
                   <pre className="mt-2 text-sm text-muted overflow-hidden text-ellipsis whitespace-pre max-h-12">{r.code}</pre>

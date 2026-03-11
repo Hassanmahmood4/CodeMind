@@ -1,9 +1,9 @@
 ---
-description: Project-wide standards for Codemind (colors, fonts, alignment)
+description: Project-wide standards for CodeMind (colors, fonts, alignment)
 alwaysApply: true
 ---
 
-# Codemind project standards
+# CodeMind project standards
 
 ## Colors
 
@@ -14,7 +14,7 @@ alwaysApply: true
 ## Typography
 
 - **Universal UI font:** Body and all UI text use the default sans font (Inter) via `font-sans` on the root layout. Do not override the root font for general content.
-- **Logo:** The Codemind logo uses `font-rounded` (Nunito) only for the "c<>demind" text.
+- **Logo:** The CodeMind logo is the image at `public/codemind/codemind-logo.png` plus the text "CodeMind" in the `CodemindLogo` component. Use it in Navbar, Footer, and landing branding.
 - **Code:** Use `font-mono` only for code snippets, language labels, or technical identifiers.
 
 ## Layout and alignment

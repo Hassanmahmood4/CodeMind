@@ -37,9 +37,9 @@ export default function ReviewPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-codemind-bg px-6 py-4 flex items-center justify-between">
-        <CodemindLogo size="md" />
-        <Link href="/dashboard" className="text-codemind-white/90 hover:text-codemind-lime transition font-medium">← Dashboard</Link>
+      <header className="bg-[#0B0F19] border-b border-white/10 px-6 py-4 flex items-center justify-between">
+        <CodemindLogo size="md" theme="dark" />
+        <Link href="/dashboard" className="text-white/90 hover:text-cyan-400 transition font-medium">← Dashboard</Link>
       </header>
       <main className="flex-1 flex flex-col p-6 max-w-6xl mx-auto w-full">
         <h1 className="text-2xl font-bold mb-4">New code review</h1>

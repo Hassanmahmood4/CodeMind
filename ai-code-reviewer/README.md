@@ -1,6 +1,6 @@
-# AI Code Review Platform
+# CodeMind – AI Code Review Platform
 
-Full-stack app: paste code, get AI feedback on bugs, security, performance, and readability.
+Full-stack app: paste code, get AI feedback on bugs, security, performance, and readability. **CodeMind** is the product name; use it consistently everywhere.
 
 ## Quick start
 
@@ -41,9 +41,10 @@ ai-code-reviewer/
 │   └── requirements.txt
 ├── frontend/
 │   ├── app/             # Next.js App Router (pages, layout)
-│   ├── components/      # CodemindLogo, CodeEditor, AuthProvider
+│   ├── components/      # CodemindLogo (CodeMind branding), CodeEditor, AuthProvider
 │   ├── lib/             # api client
 │   └── public/
+│        └── codemind/   # codemind-logo.png (brand asset)
 ├── start.sh / start.bat
 └── README.md
 ```

@@ -45,9 +45,9 @@ export default function LoginPage() {
             {error && <p className="text-error text-sm">{error}</p>}
             <button type="submit" className="btn-primary w-full" disabled={loading}>{loading ? "Logging in…" : "Log in"}</button>
           </form>
-          <p className="mt-4 text-muted text-sm text-center">Don’t have an account? <Link href="/register" className="text-codemind-lime hover:underline">Sign up</Link></p>
+          <p className="mt-4 text-muted text-sm text-center">Don’t have an account? <Link href="/register" className="text-cyan-400 hover:underline">Sign up</Link></p>
         </div>
-        <Link href="/" className="mt-4 text-muted hover:text-codemind-lime transition text-sm">← Back</Link>
+        <Link href="/" className="mt-4 text-muted hover:text-cyan-400 transition text-sm">← Back</Link>
       </div>
     </div>
   );

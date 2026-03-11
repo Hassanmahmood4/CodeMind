@@ -7,6 +7,10 @@ ai-code-reviewer/frontend/node_modules/
 ai-code-reviewer/frontend/.next/
 ai-code-reviewer/frontend/out/
 ai-code-reviewer/frontend/build/
+ai-code-reviewer/frontend/dist/
+**/dist/
+**/build/
+**/out/
 *.tsbuildinfo
 
 # Environment and secrets (keep .env.example)
@@ -14,20 +18,21 @@ ai-code-reviewer/backend/.env
 .env
 .env.local
 .env.*.local
+!.env.example
 
 # Python
-__pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
 *.egg-info/
 .eggs/
-dist/
 *.egg
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+*.manifest
 
 # Database (local SQLite)
 ai-code-reviewer/backend/*.db
@@ -38,15 +43,29 @@ ai-code-reviewer/backend/*.db
 .vscode/
 *.swp
 *.swo
+*~
 .DS_Store
 Thumbs.db
 
-# Logs and debug
+# Logs and temporary files
 *.log
+*.tmp
+*.temp
+*.tmp.*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# Optional
+# Test and coverage
+coverage/
+.nyc_output/
+*.lcov
+.htmlcov/
+
+# Optional / hosting
 .turbo
 .vercel
+
+# Optional: Cursor / editor (uncomment if you prefer not to commit)
+# .cursor/
