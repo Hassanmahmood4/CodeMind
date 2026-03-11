@@ -1,0 +1,23 @@
+---
+description: Project-wide standards for Codemind (colors, fonts, alignment)
+alwaysApply: true
+---
+
+# Codemind project standards
+
+## Colors
+
+- **Single source of truth:** All color values live in `frontend/app/globals.css` under `:root` (e.g. `--bg`, `--text`, `--codemind-lime`).
+- **In components:** Use Tailwind theme classes only (e.g. `text-muted`, `bg-codemind-bg`, `border-border`). Do not use arbitrary values like `text-[var(--muted)]` or hardcoded hex in TSX.
+- **Tailwind:** `tailwind.config.ts` maps theme colors to these CSS variables; do not add new hex values in the theme.
+
+## Typography
+
+- **Universal UI font:** Body and all UI text use the default sans font (Inter) via `font-sans` on the root layout. Do not override the root font for general content.
+- **Logo:** The Codemind logo uses `font-rounded` (Nunito) only for the "c<>demind" text.
+- **Code:** Use `font-mono` only for code snippets, language labels, or technical identifiers.
+
+## Layout and alignment
+
+- Use consistent spacing: same `max-w-*` patterns for content (e.g. `max-w-md` for forms, `max-w-4xl` / `max-w-6xl` for main content), and consistent padding (e.g. `px-6 py-4` for headers, `p-6` for cards).
+- Keep existing Tailwind patterns; align new pages and components to the same spacing and alignment used in the app.
