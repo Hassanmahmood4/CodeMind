@@ -1,0 +1,48 @@
+@import 'highlight.js/styles/github-dark.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    --muted: 240 5% 12%;
+    --border: 240 5% 18%;
+  }
+  html {
+    @apply antialiased;
+  }
+  html.dark,
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+  }
+  body {
+    @apply bg-zinc-950 text-zinc-100;
+    color: #e5e7eb;
+  }
+}
+
+@layer components {
+  .prose-invert pre code.hljs {
+    @apply rounded-lg border-0 bg-transparent p-0;
+  }
+}
+
+/* Code block styling for rehype-highlight */
+.hljs {
+  @apply bg-transparent text-zinc-100;
+}
+pre code.hljs {
+  @apply block overflow-x-auto text-sm leading-relaxed;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+.overflow-y-auto {
+  scroll-behavior: smooth;
+}
