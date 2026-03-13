@@ -51,10 +51,26 @@ export default function Review() {
       phaseTimerRef.current = setTimeout(() => setRepoPhase('analyzing'), 3000);
 
       try {
-        const token = await getToken({ skipCache: true });
+        let token = null;
+        try {
+          token = await getToken();
+          if (!token) token = await getToken({ skipCache: true });
+        } catch (tokenErr) {
+          if (import.meta.env.DEV) {
+            const data = await reviewRepository(repoUrl, null);
+            setRepoResult(data);
+            return;
+          }
+          setRepoError(tokenErr.message || 'Could not get session. Sign out and sign in again.');
+          return;
+        }
         if (!token) {
+          if (import.meta.env.DEV) {
+            const data = await reviewRepository(repoUrl, null);
+            setRepoResult(data);
+            return;
+          }
           setRepoError('Session expired or invalid. Please sign in again.');
-          setRepoLoading(false);
           return;
         }
         const data = await reviewRepository(repoUrl, token);
@@ -133,8 +149,10 @@ export default function Review() {
           {activeTab === 'editor' && (
             <>
               {error && (
-                <div className="mx-4 mt-4 rounded-xl bg-neutral-900 border border-neutral-800 px-5 py-3 text-sm text-neutral-200 shadow-sm shadow-black/20">
-                  {error}
+                <div className="mx-4 mt-4 rounded-xl bg-amber-950/50 border border-amber-800 px-5 py-3 text-sm text-amber-200 shadow-sm">
+                  <p>{error}</p>
+                  <p className="mt-2 text-xs text-amber-300">Try: sign out (click your email top-right → Sign out), then sign in again and click Review Code.</p>
+                  <a href="https://dashboard.clerk.com/last-active?path=api-keys" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-amber-400 hover:underline text-xs">Clerk Dashboard → API Keys</a>
                 </div>
               )}
               <ReviewPanel review={review} loading={loading} />

@@ -22,10 +22,26 @@ export function useChat() {
       setError(null);
 
       try {
-        const token = await getToken({ skipCache: true });
+        let token = null;
+        try {
+          token = await getToken();
+          if (!token) token = await getToken({ skipCache: true });
+        } catch (tokenErr) {
+          if (import.meta.env.DEV) {
+            const { response } = await sendChatMessage(trimmed, null);
+            setMessages((prev) => [...prev, { role: 'assistant', content: response }]);
+            return;
+          }
+          setError(tokenErr.message || 'Could not get session. Sign out and sign in again.');
+          return;
+        }
         if (!token) {
+          if (import.meta.env.DEV) {
+            const { response } = await sendChatMessage(trimmed, null);
+            setMessages((prev) => [...prev, { role: 'assistant', content: response }]);
+            return;
+          }
           setError('Session expired or invalid. Please sign in again.');
-          setLoading(false);
           return;
         }
         const { response } = await sendChatMessage(trimmed, token);

@@ -6,16 +6,40 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
+// Model must be available in Google AI Studio. gemini-1.5-flash returns 404 on v1beta.
+// Override with GEMINI_MODEL in .env if needed (e.g. gemini-2.0-flash)
+const DEFAULT_MODEL = 'gemini-2.5-flash';
+
 /**
- * Generate AI response using Gemini 1.5 Flash (used for code review and chat)
+ * Generate AI response using Gemini (used for code review and chat)
  * @param {string} prompt - User message / prompt
  * @returns {Promise<string>} AI response text
  */
 async function generateAIResponse(prompt) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const modelId = process.env.GEMINI_MODEL || DEFAULT_MODEL;
+  const model = genAI.getGenerativeModel({ model: modelId });
   const result = await model.generateContent(prompt);
   const response = result.response;
   return response.text();
 }
 
-module.exports = { generateAIResponse };
+/**
+ * Stream AI response for faster perceived performance (review appears as it's generated).
+ * @param {string} prompt - User message / prompt
+ * @yields {string} Text chunks
+ */
+async function* generateAIResponseStream(prompt) {
+  const modelId = process.env.GEMINI_MODEL || DEFAULT_MODEL;
+  const model = genAI.getGenerativeModel({ model: modelId });
+  const result = await model.generateContentStream(prompt);
+  for await (const chunk of result.stream) {
+    try {
+      const text = chunk.text();
+      if (text) yield text;
+    } catch (e) {
+      // Skip chunks that don't have text (e.g. blocked)
+    }
+  }
+}
+
+module.exports = { generateAIResponse, generateAIResponseStream };

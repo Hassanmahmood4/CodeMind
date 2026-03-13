@@ -6,20 +6,25 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(({ mode }) => {
-  // Load env so VITE_CLERK_PUBLISHABLE_KEY is available to the client (and to define below)
   const env = loadEnv(mode, __dirname, '');
-  const publishableKey = env.VITE_CLERK_PUBLISHABLE_KEY || '';
+  const publishableKey = (env.VITE_CLERK_PUBLISHABLE_KEY || '').trim().replace(/^["']|["']$/g, '');
 
   return {
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: 'inject-clerk-key',
+      transformIndexHtml(html) {
+        const script = `<script>window.VITE_CLERK_PUBLISHABLE_KEY=${JSON.stringify(publishableKey)};window.CLERK_PUBLISHABLE_KEY=${JSON.stringify(publishableKey)};</script>`;
+        return html.replace('</head>', `${script}</head>`);
+      },
+    },
+  ],
   envDir: __dirname,
   define: {
     'import.meta.env.VITE_CLERK_PUBLISHABLE_KEY': JSON.stringify(publishableKey),
   },
-  // Don't pre-bundle Clerk so it sees the same import.meta.env as our app
-  optimizeDeps: {
-    exclude: ['@clerk/react'],
-  },
+  optimizeDeps: { exclude: ['@clerk/react'] },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

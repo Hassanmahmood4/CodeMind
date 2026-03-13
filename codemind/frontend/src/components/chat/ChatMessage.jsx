@@ -30,6 +30,7 @@ export default function ChatMessage({ role, content, index }) {
               rehypePlugins={[rehypeHighlight]}
               components={{
                 code({ node, inline, className, children, ...props }) {
+                  const lang = className ? className.replace(/^language-/, '') : null;
                   return inline ? (
                     <code
                       className="px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-200 text-sm font-mono"
@@ -38,7 +39,9 @@ export default function ChatMessage({ role, content, index }) {
                       {children}
                     </code>
                   ) : (
-                    <CodeBlock className={className}>{children}</CodeBlock>
+                    <CodeBlock language={lang || undefined} className={className}>
+                      {children}
+                    </CodeBlock>
                   );
                 },
               }}

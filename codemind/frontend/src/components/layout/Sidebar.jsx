@@ -1,4 +1,4 @@
-import { Show, UserButton } from '@clerk/react';
+import { Show } from '@clerk/react';
 import { FileCode, MessageSquare, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
@@ -29,28 +29,7 @@ export default function Sidebar({
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
-        <div className="flex h-14 shrink-0 items-center justify-between border-b border-neutral-800 px-4">
-          <Link to="/" className="font-mono font-semibold text-white hover:text-zinc-200">
-            <span className="text-white">CodeMind</span>
-          </Link>
-          <div className="flex items-center gap-1">
-            <Show when="signed-out">
-              <button
-                type="button"
-                onClick={() => openAuthModal('sign-in')}
-                className="rounded-lg p-2 text-neutral-400 transition-colors hover:bg-neutral-800 hover:text-white"
-                aria-label="Sign in"
-              >
-                <User className="h-5 w-5" />
-              </button>
-            </Show>
-            <Show when="signed-in">
-              <UserButton afterSignOutUrl="/" />
-            </Show>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-1 border-b border-neutral-800 px-3 py-2">
+        <div className="flex flex-col gap-1 border-b border-neutral-800 px-3 py-3">
           <Show when="signed-out">
             <div className="rounded-lg bg-neutral-800 border border-neutral-700 px-3 py-2 text-xs font-medium text-neutral-200">
               Guest Mode

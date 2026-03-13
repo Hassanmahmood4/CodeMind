@@ -10,11 +10,15 @@ out/
 codemind/frontend/dist/
 *.tsbuildinfo
 
-# Environment and secrets
+# Environment and secrets (never commit)
 .env
 .env.local
-.env.*.local
+.env.development
+.env.production
+.env.*
 !.env.example
+!codemind/backend/.env.example
+!codemind/frontend/.env.example
 
 # IDE and OS
 .idea/

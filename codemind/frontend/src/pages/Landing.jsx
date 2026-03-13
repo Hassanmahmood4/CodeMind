@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useInView } from '../hooks/useInView';
 import EditorBackground from '../components/ui/EditorBackground';
+import Logo from '../components/ui/Logo';
 import { useAuthModal } from '../contexts/AuthModalContext';
 
 const features = [
@@ -216,9 +217,7 @@ export default function Landing() {
       {/* Sticky Navbar - transparent, blur */}
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-neutral-800 bg-neutral-950/90 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link to="/" className="font-mono font-semibold text-white transition-opacity hover:opacity-90">
-            <span className="text-white">CodeMind</span>
-          </Link>
+          <Logo />
 
           {/* Desktop nav */}
           <nav className="hidden items-center gap-1 md:flex">
@@ -539,9 +538,7 @@ export default function Landing() {
         {/* Footer */}
         <footer className="border-t border-neutral-800 px-4 py-12 sm:px-6">
           <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 sm:flex-row">
-            <Link to="/" className="font-mono font-semibold text-white transition-colors hover:text-zinc-300">
-              <span className="text-white">CodeMind</span>
-            </Link>
+            <Logo />
             <nav className="flex flex-wrap items-center justify-center gap-6 text-sm text-zinc-400">
               <button type="button" onClick={() => scrollTo('features')} className="transition-colors hover:text-white">
                 Features

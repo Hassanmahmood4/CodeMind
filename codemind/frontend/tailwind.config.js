@@ -33,6 +33,14 @@ export default {
           '0%': { opacity: '0', transform: 'scale(0.95)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
+        blink: {
+          '0%, 49%': { opacity: '1' },
+          '50%, 100%': { opacity: '0' },
+        },
+        'terminal-line': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.2s ease-out',
@@ -42,6 +50,8 @@ export default {
         'glow': 'glow 3s ease-in-out infinite',
         'editor-float': 'editor-float 20s ease-in-out infinite',
         'modal-in': 'modal-in 0.2s ease-out forwards',
+        cursor: 'blink 1s step-end infinite',
+        'terminal-line': 'terminal-line 0.4s ease-out forwards',
       },
     },
   },

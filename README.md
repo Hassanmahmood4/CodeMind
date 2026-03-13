@@ -1,12 +1,14 @@
 # CodeMind
 
-AI coding assistant with React (Vite), Express, Gemini, Clerk, and Supabase.
+AI-powered code reviewer that analyzes code and suggests improvements.
 
 ## Stack
 
-- **Frontend:** React, Vite, TailwindCSS, shadcn-style UI, React Markdown, rehype-highlight
+- **Frontend:** React + Vite, TailwindCSS, React Markdown, rehype-highlight
 - **Backend:** Node.js, Express
-- **Services:** Gemini API, Clerk Authentication, Supabase Database
+- **Auth:** Clerk Authentication
+- **AI:** Gemini API
+- **Database:** Supabase (optional, for conversation history)
 
 ## Setup
 
@@ -92,9 +94,26 @@ App runs at **http://localhost:5173**.
 ## Project structure
 
 ```
-codemind/
-  backend/          # Express API, Gemini, Supabase, Clerk auth
-  frontend/         # React + Vite + Tailwind
-.env.example
-README.md
+project-root/
+├── codemind/
+│   ├── frontend/           # React + Vite
+│   │   ├── src/
+│   │   │   ├── components
+│   │   │   ├── pages
+│   │   │   ├── hooks
+│   │   │   └── main.jsx
+│   │   ├── package.json
+│   │   └── vite.config.js
+│   └── backend/            # Express API
+│       ├── routes
+│       ├── config
+│       ├── middleware
+│       ├── server.js
+│       └── package.json
+├── RUN.md                  # Detailed run & troubleshooting
+├── .env.example
+├── .gitignore
+└── README.md
 ```
+
+For step-by-step run instructions and troubleshooting (Clerk keys, ports, token issues), see **RUN.md**.

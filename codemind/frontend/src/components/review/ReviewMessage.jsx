@@ -32,6 +32,7 @@ export default function ReviewMessage({ content, defaultOpen = true }) {
               rehypePlugins={[rehypeHighlight]}
               components={{
                 code({ node, inline, className, children, ...props }) {
+                  const lang = className ? className.replace(/^language-/, '') : null;
                   return inline ? (
                     <code
                       className="rounded bg-neutral-800 px-1.5 py-0.5 text-neutral-200 font-mono text-sm"
@@ -40,7 +41,9 @@ export default function ReviewMessage({ content, defaultOpen = true }) {
                       {children}
                     </code>
                   ) : (
-                    <CodeBlock className={className}>{children}</CodeBlock>
+                    <CodeBlock language={lang || undefined} className={className}>
+                      {children}
+                    </CodeBlock>
                   );
                 },
               }}
