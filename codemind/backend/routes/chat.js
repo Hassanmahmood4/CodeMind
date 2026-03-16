@@ -1,7 +1,8 @@
 const express = require('express');
 const { getAuth } = require('@clerk/express');
 const { generateAIResponse, generateAIResponseStream } = require('../config/gemini');
-const { getClient } = require('../config/supabase');
+const { getPrisma } = require('../config/prisma');
+const { ensureUserFromClerkId } = require('../services/ensureUser');
 
 // Code review and AI responses are done by the Gemini API. Clerk is used only for authentication (identifying the user).
 const router = express.Router();
@@ -27,17 +28,18 @@ router.post('/', (req, res, next) => {
 
     const aiResponse = await generateAIResponse(message); // Gemini API performs the code review / AI response
 
-    const supabase = getClient();
-    await supabase.from('conversations').insert({
-      user_id: userId,
-      role: 'user',
-      content: message,
-    });
-    await supabase.from('conversations').insert({
-      user_id: userId,
-      role: 'assistant',
-      content: aiResponse,
-    });
+    try {
+      const prisma = getPrisma();
+      await ensureUserFromClerkId(userId);
+      await prisma.conversation.createMany({
+        data: [
+          { userClerkId: userId, role: 'user', content: message },
+          { userClerkId: userId, role: 'assistant', content: aiResponse },
+        ],
+      });
+    } catch (dbErr) {
+      console.warn('DB save skipped:', dbErr.message);
+    }
 
     res.json({ response: aiResponse });
   } catch (err) {
@@ -79,17 +81,18 @@ router.post('/stream', (req, res, next) => {
     }
     res.end();
 
-    const supabase = getClient();
-    await supabase.from('conversations').insert({
-      user_id: userId,
-      role: 'user',
-      content: message,
-    });
-    await supabase.from('conversations').insert({
-      user_id: userId,
-      role: 'assistant',
-      content: fullText,
-    });
+    try {
+      const prisma = getPrisma();
+      await ensureUserFromClerkId(userId);
+      await prisma.conversation.createMany({
+        data: [
+          { userClerkId: userId, role: 'user', content: message },
+          { userClerkId: userId, role: 'assistant', content: fullText },
+        ],
+      });
+    } catch (dbErr) {
+      console.warn('DB save skipped:', dbErr.message);
+    }
   } catch (err) {
     console.error('Chat stream error:', err);
     if (!res.headersSent) {

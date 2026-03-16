@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      String @id @default(cuid())
+  clerkId String @unique
+
+  email     String?
+  username  String?
+  firstName String?
+  lastName  String?
+  imageUrl  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  conversations Conversation[] @relation("UserConversations")
+}
+
+model Conversation {
+  id          String @id @default(cuid())
+  userClerkId String
+
+  role    String
+  content String
+
+  createdAt DateTime @default(now())
+
+  user User @relation("UserConversations", fields: [userClerkId], references: [clerkId], onDelete: Cascade)
+
+  @@index([userClerkId, createdAt])
+}
