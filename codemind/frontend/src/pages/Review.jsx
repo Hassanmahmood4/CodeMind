@@ -1,7 +1,7 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useAuth } from '@clerk/react';
 import { useReview } from '../hooks/useReview';
-import { reviewRepository } from '../lib/api';
+import { reviewRepository, getReview } from '../lib/api';
 import CodeEditor from '../components/review/CodeEditor';
 import ReviewPanel from '../components/review/ReviewPanel';
 import ReviewInput from '../components/review/ReviewInput';
@@ -15,7 +15,11 @@ const TABS = [
   { id: 'repository', label: 'Repository', icon: Github },
 ];
 
-export default function Review() {
+export default function Review({
+  reviewStateRef,
+  onReviewsRefetch,
+  selectedReviewId,
+}) {
   const { getToken, isSignedIn } = useAuth();
   const {
     code,
@@ -23,6 +27,7 @@ export default function Review() {
     language,
     setLanguage,
     review,
+    setReview,
     loading,
     error,
     submitReview,
@@ -35,6 +40,34 @@ export default function Review() {
   const [repoError, setRepoError] = useState(null);
   const [repoPhase, setRepoPhase] = useState('cloning');
   const phaseTimerRef = useRef(null);
+
+  if (reviewStateRef) {
+    reviewStateRef.current = {
+      code: code ?? '',
+      language: language ?? 'javascript',
+      review: review ?? null,
+    };
+  }
+
+  useEffect(() => {
+    if (!selectedReviewId || !isSignedIn) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const token = await getToken();
+        if (!token || cancelled) return;
+        const data = await getReview(selectedReviewId, token);
+        if (cancelled) return;
+        setCode(data.code ?? '');
+        setLanguage(data.language ?? 'javascript');
+        setReview(data.reviewResult ?? null);
+        setActiveTab('editor');
+      } catch (err) {
+        if (!cancelled) console.warn('Load review failed:', err);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [selectedReviewId, isSignedIn, getToken, setCode, setLanguage, setReview]);
 
   const submitRepoReview = useCallback(
     async (repoUrl) => {

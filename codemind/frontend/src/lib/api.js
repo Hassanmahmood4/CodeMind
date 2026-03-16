@@ -114,3 +114,50 @@ export async function reviewRepository(repoUrl, token) {
   );
   return data;
 }
+
+const reviewHeaders = (token) => {
+  const h = { 'Content-Type': 'application/json' };
+  if (token) h.Authorization = `Bearer ${token}`;
+  return h;
+};
+
+/** Save current editor review to backend (for sidebar history). */
+export async function saveReview(payload, token) {
+  const { data } = await axios.post(`${API_BASE}/api/reviews`, payload, {
+    headers: reviewHeaders(token),
+  });
+  return data;
+}
+
+/** List current user's saved reviews (for sidebar). */
+export async function getReviews(token) {
+  const { data } = await axios.get(`${API_BASE}/api/reviews`, {
+    headers: reviewHeaders(token),
+  });
+  return data;
+}
+
+/** Get one saved review by id (load into editor). */
+export async function getReview(id, token) {
+  const { data } = await axios.get(`${API_BASE}/api/reviews/${id}`, {
+    headers: reviewHeaders(token),
+  });
+  return data;
+}
+
+/** Delete a saved review. */
+export async function deleteReview(id, token) {
+  await axios.delete(`${API_BASE}/api/reviews/${id}`, {
+    headers: reviewHeaders(token),
+  });
+}
+
+/** Rename a saved review. */
+export async function renameReview(id, title, token) {
+  const { data } = await axios.patch(
+    `${API_BASE}/api/reviews/${id}`,
+    { title },
+    { headers: reviewHeaders(token) }
+  );
+  return data;
+}

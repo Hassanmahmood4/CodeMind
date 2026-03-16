@@ -19,6 +19,7 @@ const { devAuthBypass } = require('./middleware/devAuthBypass');
 const chatRoutes = require('./routes/chat');
 const userRoutes = require('./routes/user');
 const reviewRepoRoutes = require('./routes/reviewRepo');
+const reviewsRoutes = require('./routes/reviews');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -42,6 +43,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/chat', chatRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/review-repo', reviewRepoRoutes);
+app.use('/api/reviews', reviewsRoutes);
 
 // Global error handler: prevent unhandled errors from returning empty 500
 app.use((err, req, res, next) => {
